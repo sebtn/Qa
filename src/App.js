@@ -3,8 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+
   constructor() {
     super() 
+    // have object and array of objects of the things we want to change
     this.state = {
       todos: [
         {id: 1, name: 'JSx', isComplete: false},
@@ -14,8 +16,14 @@ class App extends Component {
       ],
       currentTodo:  ''
     }
+    // here we bind the this on the state and on the render
+    // correct context and scope, still inside the constructor
+    this.handlerInputChange = this.handlerInputChange.bind(this)
   }
 
+  handlerInputChange (event) {
+    this.setState ({ currentTodo: event.target.value })
+  }
 
   render() {
     return (
@@ -26,7 +34,7 @@ class App extends Component {
         </div>
         <div className="App-todo">
           <form>
-            <input type="text" value={this.state.currentTodo}/>
+            <input onChange={this.handlerInputChange} type="text" value={this.state.currentTodo} />
           </form>
           <div className="todo-list"> 
           <ul>
