@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 // Custom components importing from index.js
 import {TodoForm, TodoList} from './components/todo'
+// importing helpers
+import {addTodo, generateNumber} from './lib/todoHelpers'
 
 
 class App extends Component {
@@ -22,6 +24,24 @@ class App extends Component {
     // here we bind the this on the state and this on the render
     // correct context and scope, still inside the constructor
     this.handlerInputChange = this.handlerInputChange.bind(this)
+    this.handlerSubmit = this.handlerSubmit.bind(this)
+    this.handleEmptySubmit = this.handleEmptySubmit.bind(this)
+  }
+
+  handlerSubmit (event) {
+    event.preventDefault()
+    const newId = generateNumber()
+    const  newTodo = {id: newId, name: this.state.currentTodo, isComplete: false}
+    const updateTodosList = addTodo(this.state.todos, newTodo)
+    this.setState({
+      todos: updateTodosList,
+      currentTodo: ''
+    })
+  }
+
+  handleEmptySubmit (event) {
+    event.preventDefault()
+    this.setState({ errorMessage: 'Please add todo text' })
   }
 
   handlerInputChange (event) {
@@ -31,6 +51,7 @@ class App extends Component {
   }
 
   render() {
+    const submitHandler = this.state.currentTodo ? this.handlerSubmit : this.handleEmptySubmit
     return (
       <div className="App">
         <div className="App-header">
@@ -38,7 +59,10 @@ class App extends Component {
           <h2>Welcome to React</h2>
         </div>
         <div className="App-todo">
-          <TodoForm handlerInputChange={this.handlerInputChange} 
+          <TodoForm handlerInputChange={this.handlerInputChange}
+          // Note the lack if this, the value is not fixed
+          // it depends if the form is empty or not
+          handlerSubmit={submitHandler} 
           currentTodo={this.state.currentTodo} /> 
           <TodoList todos={this.state.todos} /> 
         </div>       
