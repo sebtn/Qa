@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+// Custom components importing from index.js
+import {TodoForm, TodoList} from './components/todo'
+
 
 class App extends Component {
 
@@ -16,12 +19,14 @@ class App extends Component {
       ],
       currentTodo:  ''
     }
-    // here we bind the this on the state and on the render
+    // here we bind the this on the state and this on the render
     // correct context and scope, still inside the constructor
     this.handlerInputChange = this.handlerInputChange.bind(this)
   }
 
   handlerInputChange (event) {
+    // passing the object defined "currenTodo"  .target will 
+    // fetch element triggering the event and  .value pass it's value
     this.setState ({ currentTodo: event.target.value })
   }
 
@@ -33,19 +38,9 @@ class App extends Component {
           <h2>Welcome to React</h2>
         </div>
         <div className="App-todo">
-          <form>
-            <input onChange={this.handlerInputChange} type="text" value={this.state.currentTodo} />
-          </form>
-          <div className="todo-list"> 
-          <ul>
-            {this.state.todos.map(todoElement =>
-              //using a key inside <li> will help react perform better 
-              <li key={todoElement.id}>
-                <input type="checkbox" defaultChecked={todoElement.isComplete}/> {todoElement.name} 
-              </li>
-            )}
-          </ul>
-          </div> 
+          <TodoForm handlerInputChange={this.handlerInputChange} 
+          currentTodo={this.state.currentTodo} /> 
+          <TodoList todos={this.state.todos} /> 
         </div>       
       </div>
     );
