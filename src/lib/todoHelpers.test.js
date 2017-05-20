@@ -1,4 +1,4 @@
-import {addTodo, findById, toggleCompleted, updateList } from './todoHelpers'
+import {addTodo, findById, toggleCompleted, updateList, removeTodo } from './todoHelpers'
 
 // Test 1
 test('adds a todo item to the list', () => {
@@ -11,11 +11,10 @@ test('adds a todo item to the list', () => {
 		{id: 1, name: 'one', isComplete:false},
 		{id: 2, name: 'two', isComplete:false},
 		{id: 3, name: 'three', isComplete:false}
-	]
-	
+	]	
 	const result = addTodo(beginTodos, newTodo)
 
-	expect(result).toEqual(expected)
+expect(result).toEqual(expected)
 })
 
 // Test 2
@@ -29,8 +28,7 @@ test('addTodo should not mutate the existing list array', () => {
 		{id: 1, name: 'one', isComplete:false},
 		{id: 2, name: 'two', isComplete:false},
 		{id: 3, name: 'three', isComplete:false}
-	]
-	
+	]	
 	const result = addTodo(beginTodos, newTodo)
 
 expect(result).not.toBe(beginTodos)
@@ -43,8 +41,7 @@ test('findById method should return the correct item from the array todos given 
 		{id: 2, name: 'two', isComplete:false},
 		{id: 3, name: 'three', isComplete:false}
 	]
-	const expected =  {id: 2, name: 'two', isComplete:false}
-	
+	const expected =  {id: 2, name: 'two', isComplete:false}	
 	const result = findById(2, beginTodos)
 
 expect(result).toEqual(expected)
@@ -75,7 +72,6 @@ test('Update an item at a given id', () => {
 		{id: 3, name: 'three', isComplete:false}
 	]
 	const updatedItem =  {id: 2, name: 'two', isComplete:true}
-	
 	const expectedTodos =  [
 		{id: 1, name: 'one', isComplete:false},
 		{id: 2, name: 'two', isComplete:true},
@@ -93,14 +89,47 @@ test('The function updateList , should not mutate the original Array', () => {
 		{id: 2, name: 'two', isComplete:false},
 		{id: 3, name: 'three', isComplete:false}
 	]
-	const updatedItem =  {id: 2, name: 'two', isComplete:true}
-	
+	const updatedItem =  {id: 2, name: 'two', isComplete:true}	
 	const expectedTodos =  [
 		{id: 1, name: 'one', isComplete:false},
 		{id: 2, name: 'two', isComplete:true},
 		{id: 3, name: 'three', isComplete:false}
 	]
 	const result = updateList(beginTodos, updatedItem)
+
+expect(result).not.toBe(beginTodos)			
+})
+
+// Test 8
+test('The removeTodo method should remove the item by id', () => {
+	const beginTodos = [
+		{id: 1, name: 'one', isComplete:false},
+		{id: 2, name: 'two', isComplete:false},
+		{id: 3, name: 'three', isComplete:false}
+	]
+	const targetId = 2
+	const expectedTodos =  [
+		{id: 1, name: 'one', isComplete:false},
+		{id: 3, name: 'three', isComplete:false}
+	]
+	const result = removeTodo(beginTodos, targetId)
+
+expect(result).toEqual(expectedTodos)			
+})
+
+// Test 9
+test('The removeTodo method should not mutate beginTodos', () => {
+	const beginTodos = [
+		{id: 1, name: 'one', isComplete:false},
+		{id: 2, name: 'two', isComplete:false},
+		{id: 3, name: 'three', isComplete:false}
+	]
+	const targetId = 2
+	const expectedTodos =  [
+		{id: 1, name: 'one', isComplete:false},
+		{id: 3, name: 'three', isComplete:false}
+	]
+	const result = removeTodo(beginTodos, targetId)
 
 expect(result).not.toBe(beginTodos)			
 })

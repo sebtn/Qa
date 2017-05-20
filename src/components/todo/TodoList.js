@@ -14,8 +14,8 @@ export const TodoList = (props) => {
 			to todoItem.js, the idea is to link props from todo list and
 			todo element, map every prop from the todos array into each 
 			todoElement*/}
-			  { props.todos.map( todoElement => <TodoItem key={todoElement.id} 
-			  	{...todoElement} /> ) 
+				{ props.todos.map( todoElement => <TodoItem handlerToggle={props.handlerToggle} 
+				  	 key={todoElement.id} {...todoElement} handlerRemove={props.handlerRemove}  /> ) 
 				}
 			</ul>
 		</div> 

@@ -24,7 +24,7 @@ export const toggleCompleted = (todo) => ({...todo,
 })
 
 export const updateList = (list, updatedItem) => {
-	// finding  index for a given item in the list, where the
+	// finding  index for a given item in the list, where the one
 	//  being requested  is the same as the one replacing it
 	//  item.id === updatedItem.id
 	const updatedItemIndex = list.findIndex (item => 
@@ -35,4 +35,14 @@ export const updateList = (list, updatedItem) => {
 		updatedItem,
 		...list.slice(updatedItemIndex + 1)
 	] 
+}
+
+export const removeTodo = (list, id) =>  {
+	// Beacuse list is an array of objects idem.id is can be used to fetch
+	// the prop id from any obj inside the array, in this case id must match the passed id
+	const wantedItem = list.findIndex(item => item.id === id)
+	return [
+		...list.slice(0, wantedItem),
+		...list.slice(wantedItem + 1)
+	]
 }

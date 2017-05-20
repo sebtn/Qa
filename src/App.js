@@ -4,8 +4,9 @@ import './App.css';
 // Custom components importing from index.js
 import {TodoForm, TodoList} from './components/todo'
 // importing helpers
-import {addTodo, generateId} from './lib/todoHelpers'
-
+import {addTodo, generateId, findById, toggleCompleted, updateList, removeTodo} from './lib/todoHelpers'
+// Refactor uses uitls
+// import {pipe, partial} from  './lib/utils'
 
 class App extends Component {
 
@@ -17,7 +18,7 @@ class App extends Component {
     //  redundant binding of .this and the constructor, plus
     //   using arrow functions for our own custom methods will scope and 
     //   bind .this.state and .this.setState
-    //   Is not applied here
+    //  BUUUUUT  Is not applied here
     this.state = {
       todos: [
         {id: 1, name: 'JSx', isComplete: false},
@@ -32,10 +33,33 @@ class App extends Component {
     this.handlerInputChange = this.handlerInputChange.bind(this)
     this.handlerSubmit = this.handlerSubmit.bind(this)
     this.handleEmptySubmit = this.handleEmptySubmit.bind(this)
+    this.handlerToggle = this.handlerToggle.bind(this)
+    this.handlerRemove = this.handlerRemove.bind(this)
   }
 /*----------------------------
   CUSTOM METHODS
  ----------------------------*/
+handlerRemove (id, event) {
+  event.preventDefault()
+  const updatedTodos = removeTodo(this.state.todos, id) 
+  this.setState ({todos: updatedTodos})
+}
+
+
+handlerToggle (id) {
+  // refacto using pipe, the idea was to remove the const
+  // const getUpdatedTodos = pipe(findById, toggleCompleted, partial(updatedTodos, this.state.todos)) 
+  // const updatedTodos = getUpdatedTodos(id, this.state.todos)
+
+// find a specific todo by iId traversing the current todos list
+const todo = findById(id, this.state.todos)
+// toggled version of the specific todo
+const toggled = toggleCompleted(todo)
+const updatedTodos = updateList(this.state.todos, toggled)
+
+this.setState({todos: updatedTodos})
+}
+
   handlerSubmit (event) {
     event.preventDefault()
     const newId = generateId()
@@ -65,7 +89,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2>Welcome to React</h2> 
         </div>
         <div className="App-todo">
       {/*&&  -> Means :and if its true do  something...*/}
@@ -75,7 +99,7 @@ class App extends Component {
           // it depends if the form is empty or not
           handlerSubmit={submitHandler} 
           currentTodo={this.state.currentTodo} /> 
-          <TodoList todos={this.state.todos} /> 
+          <TodoList handlerToggle={this.handlerToggle} todos={this.state.todos} handlerRemove={this.handlerRemove} /> 
         </div>       
       </div>
     );
