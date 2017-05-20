@@ -21,7 +21,7 @@ export const TodoList = (props) => {
 		</div> 
 	)}  
 	// Define the propType for the component
-	// Each of the TodoList is an array so one data type
+	// Each of the TodoList is an array so one data type is referred
 	TodoList.propType = {
 		todos: PropTypes.array.isRequired
 	}
