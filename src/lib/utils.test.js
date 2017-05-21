@@ -5,7 +5,6 @@ const addThree = (a,  b, c) => a + b + c
 const inc = (num) => num +  1
 const db = (num) => num * 2
 
-
 // Test 1
 test('partial is a function which applies the first argument ahead of time', () => {
 	const inc = partial(add , 1)

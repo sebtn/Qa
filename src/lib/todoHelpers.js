@@ -7,7 +7,7 @@ export const addTodo = (list, item) => {
 	return list.concat(item)
 }
 
-// Rnd number to generate id
+// Random number to generate id
 export const generateId = () => Math.floor(Math.random()*100000) 
 
 // array.find( passing callback using object, compare the id of the 
@@ -38,7 +38,7 @@ export const updateList = (list, updatedItem) => {
 }
 
 export const removeTodo = (list, id) =>  {
-	// Beacuse list is an array of objects idem.id is can be used to fetch
+	// Because list is an array of objects item.id is can be used to fetch
 	// the prop id from any obj inside the array, in this case id must match the passed id
 	const wantedItem = list.findIndex(item => item.id === id)
 	return [
@@ -46,3 +46,26 @@ export const removeTodo = (list, id) =>  {
 		...list.slice(wantedItem + 1)
 	]
 }
+
+// use route as a string
+export const filterTodos = (list, route) => {
+	switch(route) {
+		case '/active':
+			return list.filter(item => item.isComplete === false)
+		case '/complete':
+			return list.filter(item => item.isComplete === true)
+			default:
+			return list
+	}
+} 
+
+
+
+
+
+
+
+
+
+
+

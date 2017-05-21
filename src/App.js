@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 // Custom components importing from index.js
-import {TodoForm, TodoList} from './components/todo'
+import {TodoForm, TodoList, Footer} from './components/todo'
 // importing helpers
-import {addTodo, generateId, findById, toggleCompleted, updateList, removeTodo} from './lib/todoHelpers'
-// Refactor uses uitls
+import {addTodo, generateId, findById, toggleCompleted, 
+        updateList, removeTodo, filterTodos} from './lib/todoHelpers'
+import PropTypes from 'prop-types'
+// Refactor uses utils
 // import {pipe, partial} from  './lib/utils'
 
 class App extends Component {
@@ -18,7 +20,7 @@ class App extends Component {
     //  redundant binding of .this and the constructor, plus
     //   using arrow functions for our own custom methods will scope and 
     //   bind .this.state and .this.setState
-    //  BUUUUUT  Is not applied here
+    //  BUUUUUT  Is not applied here not using utils.js
     this.state = {
       todos: [
         {id: 1, name: 'JSx', isComplete: false},
@@ -30,35 +32,43 @@ class App extends Component {
     }
     // here we bind the this on the state and this on the render
     // correct context and scope, still inside the constructor
+    // not using utils so no need to get rid of bounded this
     this.handlerInputChange = this.handlerInputChange.bind(this)
     this.handlerSubmit = this.handlerSubmit.bind(this)
     this.handleEmptySubmit = this.handleEmptySubmit.bind(this)
     this.handlerToggle = this.handlerToggle.bind(this)
     this.handlerRemove = this.handlerRemove.bind(this)
   }
-/*----------------------------
-  CUSTOM METHODS
- ----------------------------*/
-handlerRemove (id, event) {
-  event.preventDefault()
-  const updatedTodos = removeTodo(this.state.todos, id) 
-  this.setState ({todos: updatedTodos})
-}
+  /*-------------- 
+      CONTEXT 
+  ---------------*/
+  // For routes and link handlers acces
+ static contextTypes = {
+  route: PropTypes.string,
+ }
 
+  /*----------------------------
+    CUSTOM METHODS
+   ----------------------------*/
+  handlerRemove (id, event) {
+    event.preventDefault()
+    const updatedTodos = removeTodo(this.state.todos, id) 
+    this.setState ({todos: updatedTodos})
+  }
 
-handlerToggle (id) {
-  // refacto using pipe, the idea was to remove the const
-  // const getUpdatedTodos = pipe(findById, toggleCompleted, partial(updatedTodos, this.state.todos)) 
-  // const updatedTodos = getUpdatedTodos(id, this.state.todos)
+  handlerToggle (id) {
+    // refactor using pipe, the idea was to remove the const
+    // const getUpdatedTodos = pipe(findById, toggleCompleted, partial(updatedTodos, this.state.todos)) 
+    // const updatedTodos = getUpdatedTodos(id, this.state.todos)
 
-// find a specific todo by iId traversing the current todos list
-const todo = findById(id, this.state.todos)
-// toggled version of the specific todo
-const toggled = toggleCompleted(todo)
-const updatedTodos = updateList(this.state.todos, toggled)
+  // find a specific todo by iId traversing the current todos list
+  const todo = findById(id, this.state.todos)
+  // toggled version of the specific todo
+  const toggled = toggleCompleted(todo)
+  const updatedTodos = updateList(this.state.todos, toggled)
 
-this.setState({todos: updatedTodos})
-}
+  this.setState({todos: updatedTodos})
+  }
 
   handlerSubmit (event) {
     event.preventDefault()
@@ -85,6 +95,7 @@ this.setState({todos: updatedTodos})
 
   render() {
     const submitHandler = this.state.currentTodo ? this.handlerSubmit : this.handleEmptySubmit
+    const displayTodos = filterTodos(this.state.todos, this.context.route)
     return (
       <div className="App">
         <div className="App-header">
@@ -99,7 +110,9 @@ this.setState({todos: updatedTodos})
           // it depends if the form is empty or not
           handlerSubmit={submitHandler} 
           currentTodo={this.state.currentTodo} /> 
-          <TodoList handlerToggle={this.handlerToggle} todos={this.state.todos} handlerRemove={this.handlerRemove} /> 
+          <TodoList handlerToggle={this.handlerToggle} todos={displayTodos} 
+          handlerRemove={this.handlerRemove} />   
+          <Footer />
         </div>       
       </div>
     );

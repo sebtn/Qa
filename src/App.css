@@ -46,4 +46,6 @@ span a {
 li:hover span.delete-item {
   visibility: visible;
 }
-
+.Footer a {
+  padding: 0 1em 0 1em;  
+}
