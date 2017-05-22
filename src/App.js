@@ -5,23 +5,26 @@ import './App.css';
 import {TodoForm, TodoList, Footer} from './components/todo'
 // importing helpers
 import {addTodo, generateId, findById, toggleCompleted, 
-        updateList, removeTodo, filterTodos} from './lib/todoHelpers'
+        updateTodo, removeTodo, filterTodos} from './lib/todoHelpers'
 import PropTypes from 'prop-types'
 // Refactor uses utils
 // import {pipe, partial} from  './lib/utils'
 // load todos from server now they are no longer hard coded
-import {loadTodos, createTodo} from './lib/todoService'
+import {loadTodos, createTodo, saveTodo} from './lib/todoService'
 
 class App extends Component {
+  // state = {
+  //   todos: [],
+  //   currentTodo:  ''
+  // }
   constructor() {
     super() 
     // have object and array of objects of the things we want to change
     // Property initializer syntax. Create-react-app default with the functionality.
     // As result move the state out of the constructor, allow to get rid of the 
-    //  redundant binding of .this and the constructor, plus
-    //   using arrow functions for our own custom methods will scope and 
-    //   bind .this.state and .this.setState
-    //  BUUUUUT  Is not applied here not using utils.js
+    // redundant binding of .this and the constructor, plus
+    //  using arrow functions for  our own custom methods will scope and 
+    //  bind .this.state and .this.setState
     this.state = {
       todos: [],
       currentTodo:  ''
@@ -34,6 +37,7 @@ class App extends Component {
     this.handleEmptySubmit = this.handleEmptySubmit.bind(this)
     this.handlerToggle = this.handlerToggle.bind(this)
     this.handlerRemove = this.handlerRemove.bind(this)
+    // this.handlershowTempMessage = this.handlershowTempMessage.bind(this)
   }
   /*-------------- 
       CONTEXT 
@@ -44,7 +48,7 @@ class App extends Component {
  }
 
  /*Component life cycle*/
- componentDidMount() {
+ componentDidMount = () => {
 /*  loadTodo method return a promise, which is resolve to 
     the array of todos the reason is a response is already 
     called on the json object. Use then to load the [] */
@@ -55,27 +59,39 @@ class App extends Component {
   /*----------------------------
     CUSTOM METHODS handlers
    ----------------------------*/
-  handlerRemove (id, event) {
+  handlerRemove = (id, event) => {
     event.preventDefault()
     const updatedTodos = removeTodo(this.state.todos, id) 
     this.setState ({todos: updatedTodos})
   }
 
-  handlerToggle (id) {
+  handlerToggle = (id) => {
+    // Final refactor
+    // const getToggledTodo = pipe(findById, toggleCompleted) 
+    // get updated item from the current []
+    // const updated = getToggledTodo(id, this.state.toods)
+    // const getUpdatedTodos = partial(updateTodo, this.state.todos)
+    // const updatedTodos = getUpdatedTodos(updated)
+
     // refactor using pipe, the idea was to remove the const
-    // const getUpdatedTodos = pipe(findById, toggleCompleted, partial(updatedTodos, this.state.todos)) 
+    // const getUpdatedTodos = pipe(findById, getToggledTodo, partial(updateTodo, this.state.todos)) 
     // const updatedTodos = getUpdatedTodos(id, this.state.todos)
 
-  // find a specific todo by iId traversing the current todos list
-  const todo = findById(id, this.state.todos)
-  // toggled version of the specific todo
-  const toggled = toggleCompleted(todo)
-  const updatedTodos = updateList(this.state.todos, toggled)
-
-  this.setState({todos: updatedTodos})
+    // find a specific todo by iId traversing the current todos list
+    // find the updated item using id and current []
+    // const updated = getToggledTodo(id, this.state.todos)
+    const todo = findById(id, this.state.todos) 
+    // toggled version of the specific todo
+    const toggled = toggleCompleted(todo) 
+    const updatedTodos = updateTodo(this.state.todos, toggled)
+    this.setState({todos: updatedTodos})
+    // console.log('todo:', toggled)
+    saveTodo(toggled)
+    // to handle response do the
+      .then(() => this.showTempMessage('ToDo updated')) 
   }
 
-  handlerSubmit (event) {
+  handlerSubmit = (event) => {
     event.preventDefault()
     const newId = generateId()
     const  newTodo = {id: newId, name: this.state.currentTodo, isComplete: false}
@@ -85,17 +101,23 @@ class App extends Component {
       currentTodo: '',
       errorMessage: ''
     })
-    // using the post req
+    // using the post request
     createTodo(newTodo)
-      .then(() => console.log('This is the new todo added:', newTodo))
+    // set a message prop in todo state
+      .then(() => this.showTempMessage('A new thing ToDo has been added'))
+  }
+  // Set and use the prop message to remove the after 3 secs
+  showTempMessage = (msg) => {
+    this.setState({message: msg})
+    setTimeout(() => this.setState({message: ''}), 3500)
   }
 
-  handleEmptySubmit (event) {
+  handleEmptySubmit = (event) => {
     event.preventDefault()
     this.setState({ errorMessage: 'Please add something ToDo... ' })
   }
 
-  handlerInputChange (event) {
+  handlerInputChange = (event) => {
     // passing the object defined "currenTodo"  .target will 
     // fetch element triggering the event and  .value pass it's value
     this.setState ({ currentTodo: event.target.value })
@@ -114,6 +136,7 @@ class App extends Component {
         <div className="App-todo">
       {/*&&  -> Means: and if its true do  something...*/}
         {this.state.errorMessage && <span className="error">{this.state.errorMessage}</span>}
+        {this.state.message && <span className="success">{this.state.message}</span>}
           <TodoForm handlerInputChange={this.handlerInputChange}
           // Note the lack if this, {const} instead of {this.func}
           // it depends if the form is empty or not

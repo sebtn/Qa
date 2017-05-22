@@ -10,7 +10,7 @@ export const loadTodos = () => {
 				.then(res => res.json())
 }
 
-// Load todo to db
+// Load todo to db... POST
 export const createTodo = (todo) => {
 	// by default fetch is a get request
 	// use post means a modification to the req
@@ -21,5 +21,19 @@ export const createTodo = (todo) => {
 			'content-type': 'application/json' 
 		},
 		body: JSON.stringify(todo)
-	}).then(res => res.json()) // return promise
+	}).then(res => res.json()) // return promise on response
+}
+
+// load a change to the server... PUT 
+export const saveTodo = (todo) => {
+	// used string interpolation to append todo.id
+	// since id are changing we want flexible strings
+	return fetch(`${baseUrl}/${todo.id}`,  {
+		method: 'PUT',
+		headers: {
+			'Accept': 'application/json', 
+			'content-type': 'application/json' 
+		},
+		body: JSON.stringify(todo)
+	}).then(res => res.json()) //return promise on response
 }

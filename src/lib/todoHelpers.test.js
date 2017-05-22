@@ -1,5 +1,5 @@
 import {addTodo, findById, toggleCompleted, 
-				updateList, removeTodo, filterTodos } from './todoHelpers'
+				updateTodo, removeTodo, filterTodos } from './todoHelpers'
 
 // Test 1
 test('adds a todo item to the list', () => {
@@ -61,7 +61,7 @@ expect(result).not.toBe(beginTodos)
 })
 
 // Test 6
-test('Update an item at a given id', () => {
+test('UpdateTodo an item at a given id', () => {
 	const beginTodos = [
 		{id: 1, name: 'one', isComplete:false},
 		{id: 2, name: 'two', isComplete:false},
@@ -73,12 +73,12 @@ test('Update an item at a given id', () => {
 		{id: 2, name: 'two', isComplete:true},
 		{id: 3, name: 'three', isComplete:false}
 	]
-	const result = updateList(beginTodos, updatedItem)
+	const result = updateTodo(beginTodos, updatedItem)
 expect(result).toEqual(expectedTodos)			
 })
 
 // Test 7
-test('The function updateList , should not mutate the original Array', () => {
+test('The function updateTodo , should not mutate the original Array', () => {
 	const beginTodos = [
 		{id: 1, name: 'one', isComplete:false},
 		{id: 2, name: 'two', isComplete:false},
@@ -90,7 +90,7 @@ test('The function updateList , should not mutate the original Array', () => {
 		{id: 2, name: 'two', isComplete:true},
 		{id: 3, name: 'three', isComplete:false}
 	]
-	const result = updateList(beginTodos, updatedItem)
+	const result = updateTodo(beginTodos, updatedItem)
 expect(result).not.toBe(beginTodos)			
 })
 

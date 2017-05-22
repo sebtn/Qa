@@ -35,6 +35,9 @@ li{
 .error {
   color:red;
 }
+.success {
+  color:green;
+}
 li span  {
   visibility: hidden;
 }

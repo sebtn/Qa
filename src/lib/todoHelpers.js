@@ -12,7 +12,7 @@ export const generateId = () => Math.floor(Math.random()*100000)
 
 // array.find( passing callback using object, compare the id of the 
 // object (object.id) as the same as the id passed as arg
-export const findById  =  (id, list) => list.find (item => item.id === id)
+export const findById  =  (id, list) => list.find(item => item.id === id)
 
 // Take a todo object, from the result take the spread operator 
 // to pass all the props of the object, the overwrite the isComplete flag,
@@ -23,7 +23,7 @@ export const toggleCompleted = (todo) => ({...todo,
 	isComplete : !todo.isComplete
 })
 
-export const updateList = (list, updatedItem) => {
+export const updateTodo = (list, updatedItem) => {
 	// finding  index for a given item in the list, where the one
 	//  being requested  is the same as the one replacing it
 	//  item.id === updatedItem.id
