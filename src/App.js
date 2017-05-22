@@ -9,9 +9,10 @@ import {addTodo, generateId, findById, toggleCompleted,
 import PropTypes from 'prop-types'
 // Refactor uses utils
 // import {pipe, partial} from  './lib/utils'
+// load todos from server now they are no longer hard coded
+import {loadTodos, createTodo} from './lib/todoService'
 
 class App extends Component {
-
   constructor() {
     super() 
     // have object and array of objects of the things we want to change
@@ -22,12 +23,7 @@ class App extends Component {
     //   bind .this.state and .this.setState
     //  BUUUUUT  Is not applied here not using utils.js
     this.state = {
-      todos: [
-        {id: 1, name: 'JSx', isComplete: false},
-        {id: 2, name: 'Learn Morest', isComplete: true},
-        {id: 3, name: 'Copy this.this', isComplete: false},
-        {id: 4, name: 'ship 2.0', isComplete: false}
-      ],
+      todos: [],
       currentTodo:  ''
     }
     // here we bind the this on the state and this on the render
@@ -42,13 +38,22 @@ class App extends Component {
   /*-------------- 
       CONTEXT 
   ---------------*/
-  // For routes and link handlers acces
+  // For routes and link handlers access
  static contextTypes = {
   route: PropTypes.string,
  }
 
+ /*Component life cycle*/
+ componentDidMount() {
+/*  loadTodo method return a promise, which is resolve to 
+    the array of todos the reason is a response is already 
+    called on the json object. Use then to load the [] */
+  loadTodos()
+    .then(todos => this.setState({todos}))
+ }
+
   /*----------------------------
-    CUSTOM METHODS
+    CUSTOM METHODS handlers
    ----------------------------*/
   handlerRemove (id, event) {
     event.preventDefault()
@@ -80,6 +85,9 @@ class App extends Component {
       currentTodo: '',
       errorMessage: ''
     })
+    // using the post req
+    createTodo(newTodo)
+      .then(() => console.log('This is the new todo added:', newTodo))
   }
 
   handleEmptySubmit (event) {
@@ -94,7 +102,8 @@ class App extends Component {
   }
 
   render() {
-    const submitHandler = this.state.currentTodo ? this.handlerSubmit : this.handleEmptySubmit
+    const submitHandler = this.state.currentTodo ? 
+                          this.handlerSubmit : this.handleEmptySubmit
     const displayTodos = filterTodos(this.state.todos, this.context.route)
     return (
       <div className="App">
@@ -103,7 +112,7 @@ class App extends Component {
           <h2>Welcome to React</h2> 
         </div>
         <div className="App-todo">
-      {/*&&  -> Means :and if its true do  something...*/}
+      {/*&&  -> Means: and if its true do  something...*/}
         {this.state.errorMessage && <span className="error">{this.state.errorMessage}</span>}
           <TodoForm handlerInputChange={this.handlerInputChange}
           // Note the lack if this, {const} instead of {this.func}

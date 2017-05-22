@@ -46,7 +46,7 @@ expect(result).toEqual(expected)
 })
 
 // Test 4
-test('toogle todo should toogle the isComplete prop of the item', () => {
+test('toggle todo should toggle the isComplete prop of the item', () => {
 	const beginTodos = {id: 1, name: 'one', isComplete:false}
 	const expected = {id: 1, name: 'one', isComplete:true}
 	const result = toggleCompleted(beginTodos)
