@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 // Refactor uses utils
 // import {pipe, partial} from  './lib/utils'
 // load todos from server now they are no longer hard coded
-import {loadTodos, createTodo, saveTodo} from './lib/todoService'
+import {loadTodos, createTodo, saveTodo, deleteTodo} from './lib/todoService'
 
 class App extends Component {
   // state = {
@@ -37,7 +37,6 @@ class App extends Component {
     this.handleEmptySubmit = this.handleEmptySubmit.bind(this)
     this.handlerToggle = this.handlerToggle.bind(this)
     this.handlerRemove = this.handlerRemove.bind(this)
-    // this.handlershowTempMessage = this.handlershowTempMessage.bind(this)
   }
   /*-------------- 
       CONTEXT 
@@ -51,7 +50,7 @@ class App extends Component {
  componentDidMount = () => {
 /*  loadTodo method return a promise, which is resolve to 
     the array of todos the reason is a response is already 
-    called on the json object. Use then to load the [] */
+    called on the jsonObject. Use then to load the [] */
   loadTodos()
     .then(todos => this.setState({todos}))
  }
@@ -63,29 +62,30 @@ class App extends Component {
     event.preventDefault()
     const updatedTodos = removeTodo(this.state.todos, id) 
     this.setState ({todos: updatedTodos})
+    deleteTodo(id)
+      .then(() => this.showTempMessage('ToDo removed'))
   }
 
   handlerToggle = (id) => {
     // Final refactor
-    // const getToggledTodo = pipe(findById, toggleCompleted) 
     // get updated item from the current []
-    // const updated = getToggledTodo(id, this.state.toods)
+    // const getToggledTodo = pipe(findById, toggleCompleted) 
+    // const updated = getToggledTodo(id, this.state.todos)
     // const getUpdatedTodos = partial(updateTodo, this.state.todos)
     // const updatedTodos = getUpdatedTodos(updated)
 
     // refactor using pipe, the idea was to remove the const
     // const getUpdatedTodos = pipe(findById, getToggledTodo, partial(updateTodo, this.state.todos)) 
     // const updatedTodos = getUpdatedTodos(id, this.state.todos)
-
-    // find a specific todo by iId traversing the current todos list
-    // find the updated item using id and current []
     // const updated = getToggledTodo(id, this.state.todos)
+
+    // find a specific todo by id traversing the current todos list
+    // find the updated item using id and current []
     const todo = findById(id, this.state.todos) 
     // toggled version of the specific todo
     const toggled = toggleCompleted(todo) 
     const updatedTodos = updateTodo(this.state.todos, toggled)
     this.setState({todos: updatedTodos})
-    // console.log('todo:', toggled)
     saveTodo(toggled)
     // to handle response do the
       .then(() => this.showTempMessage('ToDo updated')) 
@@ -131,7 +131,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2> 
+          <h2>A nice ToDO app built with React.js</h2> 
         </div>
         <div className="App-todo">
       {/*&&  -> Means: and if its true do  something...*/}
@@ -142,9 +142,9 @@ class App extends Component {
           // it depends if the form is empty or not
           handlerSubmit={submitHandler} 
           currentTodo={this.state.currentTodo} /> 
+          <Footer />
           <TodoList handlerToggle={this.handlerToggle} todos={displayTodos} 
           handlerRemove={this.handlerRemove} />   
-          <Footer />
         </div>       
       </div>
     );

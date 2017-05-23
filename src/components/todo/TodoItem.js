@@ -27,8 +27,8 @@ export const TodoItem = (props) => {
 			{/*handler toggle takes props.id as argument on change 
 			default at an empty
 			object so we need the arrow function*/}
-			  <input type="checkbox"  onChange={handlerToggle}
-			  checked={props.isComplete} /> {props.name}  
+			  <label><input type="checkbox"  onChange={handlerToggle}
+			  checked={props.isComplete} /> {props.name} </label>
 		</li>
 	)}
 	// Each of he todo item receives three data types:

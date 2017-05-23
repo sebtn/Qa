@@ -37,3 +37,14 @@ export const saveTodo = (todo) => {
 		body: JSON.stringify(todo)
 	}).then(res => res.json()) //return promise on response
 }
+
+// delete an item from the db
+export const deleteTodo = (id) => {
+	return fetch(`${baseUrl}/${id}`,  {
+		method: 'DELETE',
+		headers:{
+		 'Accept': 'application/json',
+		 'content-type': 'application/json'
+		} // the body wont be passed, no need to do anything 
+	}) //additional with the response so no promise return   
+}

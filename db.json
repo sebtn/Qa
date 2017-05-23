@@ -3,17 +3,17 @@
     {
       "id": 1,
       "name": "Set Up Server",
-      "isComplete": true
+      "isComplete": false
     },
     {
       "id": 2,
       "name": "Start Server",
-      "isComplete": true
+      "isComplete": false
     },
     {
       "id": 3,
       "name": "Connect to Server",
-      "isComplete": true
+      "isComplete": false
     },
     {
       "id": 4,
@@ -28,17 +28,27 @@
     {
       "id": 85071,
       "name": "Database confirmation",
-      "isComplete": false
+      "isComplete": true
     },
     {
       "id": 11279,
       "name": "Another ToDo",
-      "isComplete": false
+      "isComplete": true
     },
     {
       "id": 4432,
       "name": "Check the color of the letters",
-      "isComplete": false
+      "isComplete": true
+    },
+    {
+      "id": 3319,
+      "name": "check me out yo!!",
+      "isComplete": true
+    },
+    {
+      "id": 39768,
+      "name": "See this? it's very cool",
+      "isComplete": true
     }
   ]
 }

@@ -1,14 +1,17 @@
+body {
+  background: #bdc0c1;
+}
 .App {
   text-align: center;
 }
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+  animation: App-logo-spin infinite 10s linear;
+  height: 150px;
 }
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+  background-color: #666;
+  height: 250px;
+  padding: 10px;
   color: white;
 }
 .App-intro {
@@ -22,21 +25,35 @@
   padding-top: 20px;
   display: inline-block;
   text-align: left;
+  font-size: 20px;
 }
 ul{
   padding: 0;  
 }
 input {
-  font-size: 20px;
+  margin-top: 35px;
+  font-size: 25px;
+  border-radius: 10px;
+  border-style:none;
+  border:1px solid #ff00c1;
+  outline:none;
+  padding:5px 30px 5px 30px;
+}
+input[type=checkbox] {
+    zoom: 2.0;
+    vertical-align: middle;
+    margin:5px 2px 5px 2px;
 }
 li{
   list-style-type: none;
 }
 .error {
   color:red;
+  position:absolute;
 }
 .success {
   color:green;
+  position:absolute;
 }
 li span  {
   visibility: hidden;
@@ -51,4 +68,19 @@ li:hover span.delete-item {
 }
 .Footer a {
   padding: 0 1em 0 1em;  
+  text-decoration: none;
+  font-size:20px;
+  text-align:center;
+  display: inline-block;
+
+}
+.Footer button {
+  display: inline-block;
+  margin: 20px 5px 0 5px;
+  padding: 0 1em 0 1em;  
+  text-decoration: none;
+  font-size:20px;
+  text-align:center;
+  border-radius: 10px;
+  border:1px solid #ff00c1;
 }
