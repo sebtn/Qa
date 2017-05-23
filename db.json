@@ -3,12 +3,12 @@
     {
       "id": 1,
       "name": "Set Up Server",
-      "isComplete": false
+      "isComplete": true
     },
     {
       "id": 2,
       "name": "Start Server",
-      "isComplete": false
+      "isComplete": true
     },
     {
       "id": 3,
@@ -23,7 +23,7 @@
     {
       "id": 64266,
       "name": "Add a todo is good",
-      "isComplete": false
+      "isComplete": true
     },
     {
       "id": 85071,
@@ -48,6 +48,16 @@
     {
       "id": 39768,
       "name": "See this? it's very cool",
+      "isComplete": true
+    },
+    {
+      "id": 59632,
+      "name": "Added a new todo to see ",
+      "isComplete": false
+    },
+    {
+      "id": 4090,
+      "name": "Add another",
       "isComplete": true
     }
   ]

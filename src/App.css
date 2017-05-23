@@ -31,13 +31,15 @@ ul{
   padding: 0;  
 }
 input {
-  margin-top: 35px;
+  margin-top: 75px;
   font-size: 25px;
   border-radius: 10px;
   border-style:none;
   border:1px solid #ff00c1;
   outline:none;
   padding:5px 30px 5px 30px;
+  font-weight: 100;
+  color:#666;
 }
 .foobar {
   min-width: 380px;
@@ -51,12 +53,30 @@ li{
   list-style-type: none;
 }
 .error {
-  color:red;
+  color: #D8000C;
+  background-color: #FFBABA;
   position:absolute;
+  border: 1px solid;
+  margin: 10px 0px;
+  padding:15px 10px 15px 10px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  min-width: 350px;
+  text-align: center;
+  font-weight: 800;
 }
 .success {
-  color:green;
+  color: #4F8A10;
+  background-color: #DFF2BF;
   position:absolute;
+  border: 1px solid;
+  margin: 10px 0px;
+  padding:15px 10px 15px 10px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  min-width: 350px;
+  text-align: center;
+  font-weight: 800;
 }
 li span  {
   visibility: hidden;
@@ -75,7 +95,6 @@ li:hover span.delete-item {
   font-size:20px;
   text-align:center;
   display: inline-block;
-
 }
 .Footer button {
   display: inline-block;

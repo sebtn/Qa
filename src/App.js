@@ -112,9 +112,14 @@ class App extends Component {
     setTimeout(() => this.setState({message: ''}), 3500)
   }
 
+  showTempErrorMessage = (msg) => {
+    this.setState({errorMessage: msg})
+    setTimeout(() => this.setState({errorMessage: ''}), 3500)
+  }
+
   handleEmptySubmit = (event) => {
     event.preventDefault()
-    this.setState({ errorMessage: 'Please add something ToDo... ' })
+    this.showTempErrorMessage('Please add something ToDo... ' )
   }
 
   handlerInputChange = (event) => {
