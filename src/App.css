@@ -39,6 +39,9 @@ input {
   outline:none;
   padding:5px 30px 5px 30px;
 }
+.foobar {
+  min-width: 380px;
+}
 input[type=checkbox] {
     zoom: 2.0;
     vertical-align: middle;

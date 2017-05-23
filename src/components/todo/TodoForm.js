@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 // 'props' arg is going to relate to 'this' in app.js
 export const TodoForm = (props) => (
 	<form onSubmit={props.handlerSubmit}>
-		<input type="text" 
+		<input className="foobar" type="text" 
 		onChange={props.handlerInputChange} 
 		value={props.currentTodo} />
 	</form>
