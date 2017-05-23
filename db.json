@@ -8,12 +8,12 @@
     {
       "id": 2,
       "name": "Start Server",
-      "isComplete": true
+      "isComplete": false
     },
     {
       "id": 3,
       "name": "Connect to Server",
-      "isComplete": false
+      "isComplete": true
     },
     {
       "id": 4,
@@ -33,12 +33,12 @@
     {
       "id": 11279,
       "name": "Another ToDo",
-      "isComplete": true
+      "isComplete": false
     },
     {
       "id": 4432,
       "name": "Check the color of the letters",
-      "isComplete": true
+      "isComplete": false
     },
     {
       "id": 3319,
@@ -59,6 +59,16 @@
       "id": 4090,
       "name": "Add another",
       "isComplete": true
+    },
+    {
+      "id": 78118,
+      "name": "Let me see a bit more",
+      "isComplete": false
+    },
+    {
+      "id": 34455,
+      "name": "It is what it is... !",
+      "isComplete": false
     }
   ]
 }
